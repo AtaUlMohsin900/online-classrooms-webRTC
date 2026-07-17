@@ -26,6 +26,12 @@ let createOffer = async () => {
         peerConnection.addTrack(track, localStream)
     })
 
+    peerConnection.ontrack  = (event)=>{
+        event.streams[0].getTracks().forEach((track)=>{
+            remoteStream.addTrack()
+        }) 
+    }
+
     let offer = await peerConnection.createOffer()
     await peerConnection.setLocalDescription(offer)
     console.log('Offer:', offer)
