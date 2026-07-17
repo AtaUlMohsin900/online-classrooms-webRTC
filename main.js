@@ -28,8 +28,15 @@ let createOffer = async () => {
 
     peerConnection.ontrack  = (event)=>{
         event.streams[0].getTracks().forEach((track)=>{
-            remoteStream.addTrack()
+            remoteStream.addTrack(track)
         }) 
+    }
+
+    peerConnection.onicecandidate = async (event)=>{
+        if (event.candidate){
+            console.log('New ICE Candidate: ', event.candidate);
+            
+        }
     }
 
     let offer = await peerConnection.createOffer()
